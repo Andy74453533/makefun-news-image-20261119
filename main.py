@@ -299,11 +299,17 @@ def render():
         d.text((MX, ay), line, font=f_also, fill=GREY)
         ay += 24
 
-    # ---- markets band
+    # ---- markets band (label in gold so it reads as label + values)
     d.rectangle([0, 962, W, 1000], fill=NAVY)
-    mkt = ("MARKETS   S&P 500  −0.23%    Nasdaq  +0.42%    Brent $91.95    "
-           "Gold $3,742    VIX 24.49")
-    d.text((W // 2, 970), mkt, font=f_mkt, fill=WHITE, anchor="ma")
+    label = "MARKETS"
+    vals = ("S&P 500  −0.23%    Nasdaq  +0.42%    Brent $91.95    "
+            "Gold $3,742    VIX 24.49")
+    gap = 24
+    x0 = (W - d.textlength(label, font=f_mkt) - gap
+          - d.textlength(vals, font=f_mkt)) // 2
+    d.text((x0, 970), label, font=f_mkt, fill=GOLD)
+    d.text((x0 + d.textlength(label, font=f_mkt) + gap, 970), vals,
+           font=f_mkt, fill=WHITE)
 
     # ---- footer
     d.text((W // 2, 1005), "A summary of world news — Thursday 19 November 2026",
